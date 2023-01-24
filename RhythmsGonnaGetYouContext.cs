@@ -12,7 +12,6 @@ namespace RhythmsGonnaGetYou
 
         //     optionsBuilder.UseNpgsql("server=localhost;database=RhythmsGonnaGetYouDB");
     }
-
     public DbSet<Band> Bands { get; set; };
-}
+
 }
