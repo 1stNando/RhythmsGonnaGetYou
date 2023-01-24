@@ -12,6 +12,10 @@ namespace RhythmsGonnaGetYou
 
         //     optionsBuilder.UseNpgsql("server=localhost;database=RhythmsGonnaGetYouDB");
     }
-    public DbSet<Band> Bands { get; set; };
+    //DbContext provided by EF Core that allows connection
+    //between database models to tables. 
+    public DbSet<Band> Bands { get; set; }
+
+    //Bellow we need to add the models for each remaining tables...
 
 }
