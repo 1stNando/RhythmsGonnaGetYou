@@ -14,3 +14,4 @@ namespace RhythmsGonnaGetYou
         public string ContactName { get; set; }
     }
 }
+
