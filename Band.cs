@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections.Generic;
 namespace RhythmsGonnaGetYou
 {
     public class Band
@@ -12,6 +12,12 @@ namespace RhythmsGonnaGetYou
         public string Genre { get; set; }
         public bool IsSigned { get; set; }
         public string ContactName { get; set; }
+
+        public int AlbumId { get; set; }
+        public Album Album { get; set; }
+
+        public int SongId { get; set; }
+        public Song Song { get; set; }
     }
 }
 
