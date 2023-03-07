@@ -251,7 +251,60 @@ namespace RhythmsGonnaGetYou
                         break;
 
                     case 3:
+                        //First search the database for the song name.
+                        Console.WriteLine("What is the title of the song you are adding : \n");
+                        var searchSong = PromptForString("> : ");
 
+                        var doesSongExist = context.Songs.FirstOrDefault(Songs => Songs.Title == searchSong);
+
+                        //Then if the song already exists in the database display message.
+                        if (doesSongExist != null)
+                        {
+                            Console.WriteLine($"We found that song titled {doesSongExist} is already in the database. Please try a different song name. \n");
+                        }
+                        else
+                        {
+                            //Now we need to search for the name of the album this song is from.
+                            Console.WriteLine("Type in the name of the album this song is in: \n");
+
+                            var lookInAlbums = PromptForString("> : ");
+                            var foundExistingAlbum = context.Albums.FirstOrDefault(Albums => Albums.Title == lookInAlbums);
+
+                            //If it turns out that the album corresponding to the song you want to add does not currently exist in the database, then display a message to the user. 
+                            if (foundExistingAlbum == null)
+                            {
+                                Console.WriteLine($"\n{lookInAlbums} album does not exist in the database. Please add it first. \n");
+                            }
+                            else
+                            {
+                                //New song to be added.
+                                Console.WriteLine($"Album Title: {lookInAlbums} \n");
+                                Console.WriteLine($"Song Title: {searchSong} \n");
+                                //Prompt user for the details of the song.
+                                Console.WriteLine("Type in the track number: \n");
+                                var trackNumber = int.Parse(Console.ReadLine());
+
+                                var lengthOfTrack = PromptForString("Type in the length of the track - in the format: [00:00:00] \n");
+
+                                //Create new instance of a song.
+                                var newSong = new Song
+                                {
+                                    TrackNumber = trackNumber,
+                                    Title = searchSong,
+                                    Duration = lengthOfTrack
+                                };
+
+                                //Save the new song to the database.
+                                context.Songs.Add(newSong);
+                                context.SaveChanges();
+
+                                Console.WriteLine($"You have successfully added song, titled {searchSong}, to the database. \n");
+                            }
+                        }
+                        break;
+
+                    case 4:
+                        //
 
 
                         break;
