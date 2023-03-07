@@ -78,6 +78,41 @@ namespace RhythmsGonnaGetYou
             }
         }
 
+
+
+        static void DisplayGreeting()
+        {
+            Console.WriteLine("\n\n");
+            Console.WriteLine("     - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n");
+            Console.WriteLine("    |                 You are now logged into                |\n");
+            Console.WriteLine("    |                The Rhythm's Gonna Get You              |\n");
+            Console.WriteLine("    |              Recording Label and Studio LLC            |\n");
+            Console.WriteLine("    |                Artist Management Services              |\n");
+            Console.WriteLine("     - - - - - - - - - - - - - MENU - - - - - - - - - - - - -\n");
+
+            Console.WriteLine(" ------------------------ ");
+            Console.WriteLine("|BAND SETTINGS:          |");
+            Console.WriteLine("|( 1.) Add band          |");
+            Console.WriteLine("|( 2.) Add album         |");
+            Console.WriteLine("|( 3.) Add song          |");
+            Console.WriteLine("|( 4.) Un-sign a band    |"); //(update isSigned to false)
+            Console.WriteLine("|( 5.) Re-sign a band    |"); //(update isSigned to true)
+            Console.WriteLine(" ------------------------\n");
+
+            Console.WriteLine(" -------------------------------------------------------\n");
+            Console.WriteLine("|DATA ON RECORD:                                        |\n");
+            Console.WriteLine("|( 6.) View all bands                                   |");
+            Console.WriteLine("|( 7.) View all albums by a band                        |");
+            Console.WriteLine("|( 8.) View all albums by ReleaseDate                   |");
+            Console.WriteLine("|( 9.) View all signed bands                            |");
+            Console.WriteLine("|(10.) View all non-signed bands                        |\n");
+            Console.WriteLine("|(11.) Quit                                             |\n");
+            Console.WriteLine(" -------------------------------------------------------\n");
+            Console.WriteLine("Key in the desired action number and press ENTER.\n");
+        }
+
+
+
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to C#");
@@ -88,6 +123,8 @@ namespace RhythmsGonnaGetYou
 
             while (keepGoing)
             {
+                DisplayGreeting();
+
                 Console.Write("(V)iew all bands. (A)dd a new album/song. (U)pdate recording label status. (Q)uit. ");
                 var option = Console.ReadLine().ToUpper();
 
