@@ -250,7 +250,7 @@ namespace RhythmsGonnaGetYou
                         }
                         break;
 
-                    case 3:
+                    case 3: //Add Song.
                         //First search the database for the song name.
                         Console.WriteLine("What is the title of the song you are adding : \n");
                         var searchSong = PromptForString("> : ");
@@ -304,10 +304,28 @@ namespace RhythmsGonnaGetYou
                         break;
 
                     case 4:
-                        //
+                        //Change the status of boolean value for band isSigned to false.
+                        var nameOfBand = PromptForString("Type in the name of the band you would like to UN-SIGN: \n");
+                        var findBand = context.Bands.FirstOrDefault(Bands => Bands.Name == nameOfBand);
 
+                        //If it turns out that the band does not exist in our database.
+                        if (findBand == null)
+                        {
+                            Console.WriteLine($"\n{nameOfBand} does not exist in our database at this time. Please try again. \n");
+                        }
 
+                        //If the band is found to exist in our database, then update boolean value for isSigned to false.
+                        else
+                        {
+                            findBand.IsSigned = false;
+                            //Save the change.
+                            context.SaveChanges();
+
+                            Console.WriteLine($"You have successfully UN-SIGNED band named {nameOfBand}. \n");
+                        }
                         break;
+
+
                 }
             }
         }
