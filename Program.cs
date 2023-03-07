@@ -182,8 +182,7 @@ namespace RhythmsGonnaGetYou
 
                             var contactName = PromptForString("What is the name of their contact: \n");
 
-                            //Need to update tables to include phone number column.
-                            //var contactPhoneNumber = PromptForInteger("Enter their phone number: \n");
+                            var contactPhoneNumber = PromptForInteger("Enter their phone number: \n");
 
                             var newBand = new Band
                             {
@@ -193,25 +192,67 @@ namespace RhythmsGonnaGetYou
                                 Website = website,
                                 Genre = genre,
                                 IsSigned = isSigned,
-                                ContactName = contactName
-                                //ContactPhoneNumber = contactPhoneNumber
+                                ContactName = contactName,
+                                ContactPhoneNumber = contactPhoneNumber
                             };
 
                             context.Bands.Add(newBand);
                             context.SaveChanges();
-
-                            // if (answer == "T")
-                            // {
-                            //     IsSigned bool = true;
-                            // }
-                            // else (answer == "F")
-                            // {
-                            //     IsSigned bool = false;
-                            // }
+                            Console.WriteLine($"Success! Congratulations on adding {bandName} to our record label!");
                         }
                         break;
 
-                    case 1111:
+                    case 2: //Add album.
+                        Console.WriteLine("What is the name of the album you want to add? ");
+                        var searchAlbums = PromptForString("> : ");
+
+                        var existingAlbum = context.Albums.FirstOrDefault(Albums => Albums.Title == searchAlbums);
+
+                        if (existingAlbum != null)
+                        {
+                            Console.WriteLine($"{searchAlbums} is already in existence. Please try again. ");
+                        }
+                        else
+                        { //Look for the band name first.
+                            var searchBands = PromptForString("Type in the name of the band who made album: \n");
+
+                            var doesBandExist = context.Bands.FirstOrDefault(Bands => Bands.Name == searchBands);
+
+                            if (doesBandExist == null)
+                            {
+                                Console.WriteLine($"\n {searchBands}\n does not exist. Please add the band first. ");
+                            }
+
+                            else
+                            {
+                                //Create the new album record.
+                                Console.WriteLine($"Band name: {searchBands}. \n");
+
+                                Console.WriteLine($"Album name: {searchAlbums} \n");
+                                var albumTitle = searchAlbums;
+
+                                var isItExplicit = getBoolInputValue("Is the rating explicit? Type in Yes or No: \n");
+
+                                var dateOfRelease = PromptForDatetime("Type in the album release date: \n");
+
+                                var newAlbum = new Album
+                                {
+                                    Title = albumTitle,
+                                    IsExplicit = isItExplicit,
+                                    ReleaseDate = dateOfRelease
+                                };
+
+                                //Save the new album to the database
+                                context.Albums.Add(newAlbum);
+                                context.SaveChanges();
+                                Console.WriteLine($"\nYour new album titled {albumTitle} has been successfully added. ");
+                            }
+                        }
+                        break;
+
+                    case 3:
+
+
 
                         break;
                 }
