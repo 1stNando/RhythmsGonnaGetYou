@@ -78,8 +78,7 @@ namespace RhythmsGonnaGetYou
             }
         }
 
-
-
+        //Method to call to display welcome greeting.
         static void DisplayGreeting()
         {
             Console.WriteLine("\n\n");
@@ -99,15 +98,15 @@ namespace RhythmsGonnaGetYou
             Console.WriteLine("|( 5.) Re-sign a band    |"); //(update isSigned to true)
             Console.WriteLine(" ------------------------\n");
 
-            Console.WriteLine(" -------------------------------------------------------\n");
-            Console.WriteLine("|DATA ON RECORD:                                        |\n");
-            Console.WriteLine("|( 6.) View all bands                                   |");
-            Console.WriteLine("|( 7.) View all albums by a band                        |");
-            Console.WriteLine("|( 8.) View all albums by ReleaseDate                   |");
-            Console.WriteLine("|( 9.) View all signed bands                            |");
-            Console.WriteLine("|(10.) View all non-signed bands                        |\n");
-            Console.WriteLine("|(11.) Quit                                             |\n");
-            Console.WriteLine(" -------------------------------------------------------\n");
+            Console.WriteLine(" -------------------------------------\n");
+            Console.WriteLine("|DATA ON RECORD:                      |\n");
+            Console.WriteLine("|( 6.) View all bands                 |");
+            Console.WriteLine("|( 7.) View all albums by a band      |");
+            Console.WriteLine("|( 8.) View all albums by ReleaseDate |");
+            Console.WriteLine("|( 9.) View all signed bands          |");
+            Console.WriteLine("|(10.) View all non-signed bands      |\n");
+            Console.WriteLine("|(11.) Quit                           |\n");
+            Console.WriteLine(" -------------------------------------\n");
             Console.WriteLine("Key in the desired action number and press ENTER.\n");
         }
 
@@ -115,8 +114,6 @@ namespace RhythmsGonnaGetYou
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to C#");
-
             var context = new RhythmsGonnaGetYouContext();
 
             var keepGoing = true;
@@ -125,16 +122,15 @@ namespace RhythmsGonnaGetYou
             {
                 DisplayGreeting();
 
-                Console.Write("(V)iew all bands. (A)dd a new album/song. (U)pdate recording label status. (Q)uit. ");
-                var option = Console.ReadLine().ToUpper();
+                var menuOption = PromptForInteger("> : ");
 
-                switch (option)
+                switch (menuOption)
                 {
-                    case "Q":
+                    case 11:
                         keepGoing = false;
                         break;
 
-                    case "V":
+                    case 111:
                         var bands = context.Bands.Include(band => band.Album);
 
                         var bandCount = bands.Count();
@@ -154,52 +150,68 @@ namespace RhythmsGonnaGetYou
                             //foreach (var song in band.Song)
 
                         }
-
                         break;
 
-                    ///////////
-                    case "A":
-                        Console.Write("What is the name of the new band: ");
-                        var name = Console.ReadLine();
+                    case 1: //Add band.
+                        var nameToSearch = PromptForString("What is the name of the new band: ");
 
-                        Console.Write("What is the country of origin: ");
-                        var countryOfOrigin = Console.ReadLine();
+                        var existingBand = context.Bands.FirstOrDefault(Bands => Bands.Name == nameToSearch);
 
-                        Console.Write("How many members are in this band: ");
-                        var numberOfMembers = int.Parse(Console.ReadLine());
-
-                        Console.Write("What is the name of their website: ");
-                        var website = Console.ReadLine();
-
-                        Console.Write("What is their genre: ");
-                        var genre = Console.ReadLine();
-
-                        //Console.WriteLine("Are they signed to our record label? (T)rue or (F)alse: ");
-                        //var answer = Console.ReadLine().ToLower();
-
-                        var newBand = new Band
+                        if (existingBand != null)
                         {
-                            Name = name,
-                            CountryOfOrigin = countryOfOrigin,
-                            NumberOfMembers = numberOfMembers,
-                            Website = website,
-                            Genre = genre
-                        };
+                            Console.WriteLine($"{nameToSearch} already exists in our database.\nMake sure you spelled it correctly. ");
+                        }
 
-                        context.Bands.Add(newBand);
-                        context.SaveChanges();
+                        else //Add the new band information.
+                        {
+                            Console.WriteLine($"Name of the new band: {nameToSearch} ");
+                            var bandName = nameToSearch;
 
-                        // if (answer == "T")
-                        // {
-                        //     IsSigned bool = true;
-                        // }
-                        // else (answer == "F")
-                        // {
-                        //     IsSigned bool = false;
-                        // }
+                            var countryOfOrigin = PromptForString("\nWhat is the country of origin: \n");
+
+                            Console.WriteLine("How many members are in this band: \n");
+                            var numberOfMembers = int.Parse(Console.ReadLine());
+
+                            var website = PromptForString("What is the name of their website: ");
+
+                            var genre = PromptForString("What genre of music: \n");
+
+                            //Boolean condition isSigned t/f
+                            Console.WriteLine("Is the band officially signed with our record label? Tyep in Yes or No \n");
+                            var isSigned = getBoolInputValue(Console.ReadLine());
+
+                            var contactName = PromptForString("What is the name of their contact: \n");
+
+                            //Need to update tables to include phone number column.
+                            //var contactPhoneNumber = PromptForInteger("Enter their phone number: \n");
+
+                            var newBand = new Band
+                            {
+                                Name = bandName,
+                                CountryOfOrigin = countryOfOrigin,
+                                NumberOfMembers = numberOfMembers,
+                                Website = website,
+                                Genre = genre,
+                                IsSigned = isSigned,
+                                ContactName = contactName
+                                //ContactPhoneNumber = contactPhoneNumber
+                            };
+
+                            context.Bands.Add(newBand);
+                            context.SaveChanges();
+
+                            // if (answer == "T")
+                            // {
+                            //     IsSigned bool = true;
+                            // }
+                            // else (answer == "F")
+                            // {
+                            //     IsSigned bool = false;
+                            // }
+                        }
                         break;
 
-                    case "U":
+                    case 1111:
 
                         break;
                 }
