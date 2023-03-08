@@ -98,8 +98,8 @@ namespace RhythmsGonnaGetYou
             Console.WriteLine("                     |( 5.) Re-sign a band    |"); //(update isSigned to true)
             Console.WriteLine("                      ------------------------\n");
 
-            Console.WriteLine("               -------------------------------------\n");
-            Console.WriteLine("              |DATA ON RECORD:                      |\n");
+            Console.WriteLine("               -------------------------------------");
+            Console.WriteLine("              |DATA ON RECORD:                      |");
             Console.WriteLine("              |( 6.) View all bands                 |");
             Console.WriteLine("              |( 7.) View all albums by a band      |");
             Console.WriteLine("              |( 8.) View all albums by ReleaseDate |");
@@ -193,7 +193,7 @@ namespace RhythmsGonnaGetYou
                             Console.WriteLine($"{searchAlbums} is already in existence. Please try again. ");
                         }
                         else
-                        { //Look for the band name first.
+                        { //Look for the band name first./////////////////////////could show list of existing bands.
                             var searchBands = PromptForString("Type in the name of the band who made album: \n");
 
                             var doesBandExist = context.Bands.FirstOrDefault(Bands => Bands.Name == searchBands);
@@ -219,7 +219,8 @@ namespace RhythmsGonnaGetYou
                                 {
                                     Title = albumTitle,
                                     IsExplicit = isItExplicit,
-                                    ReleaseDate = dateOfRelease
+                                    ReleaseDate = dateOfRelease,
+                                    BandId = doesBandExist.Id
                                 };
 
                                 //Save the new album to the database
@@ -271,7 +272,8 @@ namespace RhythmsGonnaGetYou
                                 {
                                     TrackNumber = trackNumber,
                                     Title = searchSong,
-                                    Duration = lengthOfTrack
+                                    Duration = lengthOfTrack,
+                                    AlbumId = foundExistingAlbum.Id
                                 };
 
                                 //Save the new song to the database.
