@@ -12,10 +12,9 @@ namespace RhythmsGonnaGetYou
         public string Genre { get; set; }
         public bool IsSigned { get; set; }
         public string ContactName { get; set; }
-        public int ContactPhoneNumber { get; set; }
 
-        public int AlbumId { get; set; }
-        public Album Album { get; set; }
+        public List<Album> Albums { get; set; }
+
 
     }
 }

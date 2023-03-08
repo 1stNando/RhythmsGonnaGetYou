@@ -12,6 +12,6 @@ namespace RhythmsGonnaGetYou
         public int BandId { get; set; }
         public Band Band { get; set; }
 
-        public Song Song { get; set; }
+        public List<Song> Songs { get; set; }
     }
 }

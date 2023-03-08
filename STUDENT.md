@@ -19,3 +19,25 @@ Otherwise do the following _ONCE_ before using the steps above.
 ## PROTIP:
 
 When you are complete with the project and have turned it in to your instructor, update README.md with details about the assignment.
+
+Notes:
+
+This was how I approached my first time attempt.
+case 111:
+var bands = context.Bands.Include(band => band.Album);
+
+                        var bandCount = bands.Count();
+                        Console.WriteLine($"The database contains this number of bands: {bandCount}");
+
+                        foreach (var band in bands)
+                        {
+                            if (band.Album == null)
+                            {
+                                Console.WriteLine($"The band {band.Name} does not have any albums in our database. ");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"There is a band named {band.Name} with the following albums: {band.Album}");
+                            }
+                        }
+                        break;

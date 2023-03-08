@@ -21,7 +21,7 @@ namespace RhythmsGonnaGetYou
         // we want to connect to a postgres database named BeatBoxStudio on
         // our local machine.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {   //This is where the postgres database generated in your localhost database!!!!!here its "RhythmsGonnaGetYouDB".
+        {   //This is where the postgres database generated in your localhost database!!!!!here its "RhythmsGonnaGetYouDB"!!!!
             optionsBuilder.UseNpgsql("server=localhost;database=RhythmsGonnaGetYouDB");
             var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
             optionsBuilder.UseLoggerFactory(loggerFactory);

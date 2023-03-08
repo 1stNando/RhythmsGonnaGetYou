@@ -89,25 +89,25 @@ namespace RhythmsGonnaGetYou
             Console.WriteLine("    |                Artist Management Services              |\n");
             Console.WriteLine("     - - - - - - - - - - - - - MENU - - - - - - - - - - - - -\n");
 
-            Console.WriteLine(" ------------------------ ");
-            Console.WriteLine("|BAND SETTINGS:          |");
-            Console.WriteLine("|( 1.) Add band          |");
-            Console.WriteLine("|( 2.) Add album         |");
-            Console.WriteLine("|( 3.) Add song          |");
-            Console.WriteLine("|( 4.) Un-sign a band    |"); //(update isSigned to false)
-            Console.WriteLine("|( 5.) Re-sign a band    |"); //(update isSigned to true)
-            Console.WriteLine(" ------------------------\n");
+            Console.WriteLine("                      ------------------------");
+            Console.WriteLine("                     |BAND SETTINGS:          |");
+            Console.WriteLine("                     |( 1.) Add band          |");
+            Console.WriteLine("                     |( 2.) Add album         |");
+            Console.WriteLine("                     |( 3.) Add song          |");
+            Console.WriteLine("                     |( 4.) Un-sign a band    |"); //(update isSigned to false)
+            Console.WriteLine("                     |( 5.) Re-sign a band    |"); //(update isSigned to true)
+            Console.WriteLine("                      ------------------------\n");
 
-            Console.WriteLine(" -------------------------------------\n");
-            Console.WriteLine("|DATA ON RECORD:                      |\n");
-            Console.WriteLine("|( 6.) View all bands                 |");
-            Console.WriteLine("|( 7.) View all albums by a band      |");
-            Console.WriteLine("|( 8.) View all albums by ReleaseDate |");
-            Console.WriteLine("|( 9.) View all signed bands          |");
-            Console.WriteLine("|(10.) View all non-signed bands      |\n");
-            Console.WriteLine("|(11.) Quit                           |\n");
-            Console.WriteLine(" -------------------------------------\n");
-            Console.WriteLine("Key in the desired action number and press ENTER.\n");
+            Console.WriteLine("               -------------------------------------\n");
+            Console.WriteLine("              |DATA ON RECORD:                      |\n");
+            Console.WriteLine("              |( 6.) View all bands                 |");
+            Console.WriteLine("              |( 7.) View all albums by a band      |");
+            Console.WriteLine("              |( 8.) View all albums by ReleaseDate |");
+            Console.WriteLine("              |( 9.) View all signed bands          |");
+            Console.WriteLine("              |(10.) View all non-signed bands      |");
+            Console.WriteLine("              |(11.) Quit                           |");
+            Console.WriteLine("               -------------------------------------\n");
+            Console.WriteLine("             Key in the desired action number and press ENTER.\n");
         }
 
 
@@ -130,27 +130,7 @@ namespace RhythmsGonnaGetYou
                         keepGoing = false;
                         break;
 
-                    case 111:
-                        var bands = context.Bands.Include(band => band.Album);
 
-                        var bandCount = bands.Count();
-                        Console.WriteLine($"The database contains this number of bands: {bandCount}");
-
-                        foreach (var band in bands)
-                        {
-                            if (band.Album == null)
-                            {
-                                Console.WriteLine($"The band {band.Name} does not have any albums in our database. ");
-                            }
-                            else
-                            {
-                                Console.WriteLine($"There is a band named {band.Name} with the following albums: {band.Album}");
-                            }
-
-                            //foreach (var song in band.Song)
-
-                        }
-                        break;
 
                     case 1: //Add band.
                         var nameToSearch = PromptForString("What is the name of the new band: ");
@@ -165,7 +145,7 @@ namespace RhythmsGonnaGetYou
                         else //Add the new band information.
                         {
                             Console.WriteLine($"Name of the new band: {nameToSearch} ");
-                            var bandName = nameToSearch;
+                            var newBandName = nameToSearch;
 
                             var countryOfOrigin = PromptForString("\nWhat is the country of origin: \n");
 
@@ -177,28 +157,28 @@ namespace RhythmsGonnaGetYou
                             var genre = PromptForString("What genre of music: \n");
 
                             //Boolean condition isSigned t/f
-                            Console.WriteLine("Is the band officially signed with our record label? Tyep in Yes or No \n");
+                            Console.WriteLine("Is the band officially signed with our record label? Type in Yes or No. ");
                             var isSigned = getBoolInputValue(Console.ReadLine());
 
                             var contactName = PromptForString("What is the name of their contact: \n");
 
-                            var contactPhoneNumber = PromptForInteger("Enter their phone number: \n");
 
                             var newBand = new Band
                             {
-                                Name = bandName,
+                                Name = newBandName,
                                 CountryOfOrigin = countryOfOrigin,
                                 NumberOfMembers = numberOfMembers,
                                 Website = website,
                                 Genre = genre,
                                 IsSigned = isSigned,
-                                ContactName = contactName,
-                                ContactPhoneNumber = contactPhoneNumber
+                                ContactName = contactName
                             };
 
                             context.Bands.Add(newBand);
                             context.SaveChanges();
-                            Console.WriteLine($"Success! Congratulations on adding {bandName} to our record label!");
+                            Console.WriteLine($"Success! Congratulations on adding {newBandName} to our record label!");
+                            Console.WriteLine("\n");
+                            Console.WriteLine("Going back to the Main menu now.");
                         }
                         break;
 
