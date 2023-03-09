@@ -41,8 +41,8 @@ namespace RhythmsGonnaGetYou
             return 0;
         }
 
-        //Create a method to manage DateTime prompt
-        static DateTime PromptForDatetime(string prompt)
+        //Create a method to manage DateTime prompt////////////////////PROBLEM NOT SOLVED, DATETIME NOT WORKING!!!
+        public static DateTime PromptForDateTime(string prompt)
         {
             Console.Write(prompt);
             DateTime userInput;
@@ -54,10 +54,40 @@ namespace RhythmsGonnaGetYou
             }
             else
             {
-                Console.WriteLine("Sorry, but that is not a valid input - will use default date.");
+                Console.WriteLine("Input format is not valid. We will use a default date. ");
                 return default(DateTime);
             }
         }
+
+        //DateTime for Album ReleaseDate
+        public static DateTime PromptDateTimeAlbum()
+        {
+            // Console.WriteLine("Day: ");
+            // var day = Convert.ToInt32(Console.ReadLine());
+
+            // Console.WriteLine("Month: ");
+            // var month = Convert.ToInt32(Console.ReadLine());
+
+            // Console.WriteLine("Year: ");
+            // var year = Convert.ToInt32(Console.ReadLine());
+
+            // return new DateTime(year, month, day, 0, 0, 0, 0);
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture("en-au");
+
+            Console.WriteLine("Enter a date: \n ");
+            var temp = Console.ReadLine();
+            DateTime userDateInput;
+            DateTime.TryParse(temp, out userDateInput);
+
+            if (!userDateInput.Equals(DateTime.MinValue))
+            {
+                Console.Write("Success!");
+            }
+            return userDateInput;
+        }
+
+
 
         //Create a method to manage a bool for status of band. isSigned true/false.
         public static bool getBoolInputValue(string IsSigned)
@@ -203,7 +233,7 @@ namespace RhythmsGonnaGetYou
                                 Console.WriteLine($"\n {searchBands}\n does not exist. Please add the band first. ");
                             }
 
-                            else
+                            else//////////PROBLEM NOT SOLVED HOW TO CORRECTLY PROMPT FOR DATETIME
                             {
                                 //Create the new album record.
                                 Console.WriteLine($"Band name: {searchBands}. \n");
@@ -213,7 +243,8 @@ namespace RhythmsGonnaGetYou
 
                                 var isItExplicit = getBoolInputValue("Is the rating explicit? Type in Yes or No: \n");
 
-                                var dateOfRelease = PromptForDatetime("Type in the album release date: \n");
+                                var dateOfRelease = PromptDateTimeAlbum();
+
 
                                 var newAlbum = new Album
                                 {
@@ -285,7 +316,7 @@ namespace RhythmsGonnaGetYou
                         }
                         break;
 
-                    case 4:
+                    case 4://UN-SIGN
                         //Change the status of boolean value for band isSigned to false.
                         var nameOfBand = PromptForString("Type in the name of the band you would like to UN-SIGN: \n");
                         var findBand = context.Bands.FirstOrDefault(Bands => Bands.Name == nameOfBand);
@@ -305,6 +336,36 @@ namespace RhythmsGonnaGetYou
 
                             Console.WriteLine($"You have successfully UN-SIGNED band named {nameOfBand}. \n");
                         }
+                        break;
+
+                    case 5://RE-SIGN
+                        var nameOfBandToSign = PromptForString("Type in the name of band you would like to RE-SIGN: \n");
+                        var findBandToSign = context.Bands.FirstOrDefault(Bands => Bands.Name == nameOfBandToSign);
+
+                        if (findBandToSign == null)
+                        {
+                            Console.WriteLine($"\n{nameOfBandToSign} does not exist in our database at this time. Please try again. \n");
+                        }
+
+                        //If the band is found to exist in our database, then update boolean value for isSigned to false.
+                        else
+                        {
+                            findBandToSign.IsSigned = true;
+                            //Save the change.
+                            context.SaveChanges();
+
+                            Console.WriteLine($"You have successfully UN-SIGNED band named {nameOfBandToSign}. \n");
+                        }
+
+                        break;
+
+                    case 6://View all bands
+                        Console.WriteLine("Here is a list with all the bands in the database: \n");
+                        foreach (var band in context.Bands)
+                        {
+                            Console.WriteLine($"{band.Name} ");
+                        }
+
                         break;
 
 
